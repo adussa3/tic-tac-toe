@@ -6,7 +6,7 @@ const initialGameBoard = [
     [null, null, null],
 ];
 
-export default function GameBoard() {
+export default function GameBoard({ onSelectSquare, activePlayerSymbol }) {
     const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
     // RECALL: we DON'T want to directly update the matrix because it's still has the same memory address (this can cause weird bugs)
@@ -14,9 +14,11 @@ export default function GameBoard() {
     const handleSelectSquare = (rowIndex, colIndex) => {
         setGameBoard((prevGameBoard) => {
             const updatedGameBoard = [...prevGameBoard.map((innerArray) => [...innerArray])];
-            if (!updatedGameBoard[rowIndex][colIndex]) updatedGameBoard[rowIndex][colIndex] = "X";
+            if (!updatedGameBoard[rowIndex][colIndex]) updatedGameBoard[rowIndex][colIndex] = activePlayerSymbol;
             return updatedGameBoard;
         });
+
+        onSelectSquare();
     };
 
     return (
